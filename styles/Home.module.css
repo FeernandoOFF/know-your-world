@@ -1,8 +1,8 @@
 .main {
   height: 100vh;
   width: 100vw;
-  position: relative;
 
+  position: relative;
   background: rgb(130, 203, 240);
   background: radial-gradient(
     circle,
@@ -10,38 +10,4 @@
     rgba(102, 163, 221, 1) 24%,
     rgba(10, 48, 147, 1) 99%
   );
-}
-.main h2 {
-  font-size: 60px;
-  font-weight: 600;
-  color: white;
-
-  position: absolute;
-  top: 50%;
-  left: 25%;
-  z-index: 1;
-}
-
-.svg {
-  height: 800px;
-  width: 1000px;
-
-  margin: 0 auto;
-  display: block;
-  z-index: 2;
-}
-
-.circle {
-  fill: rgb(57, 120, 171);
-}
-
-.country {
-  fill: rgb(107, 65, 23);
-  stroke: rgb(47, 46, 46);
-}
-.country:hover {
-  fill: rgb(203, 60, 60);
-}
-.selected {
-  fill: rgb(203, 60, 60);
 }

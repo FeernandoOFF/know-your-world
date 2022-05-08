@@ -1,11 +1,12 @@
-import styles from '../styles/Home.module.css';
-import { useGeoJsonData } from '../utils/useGeoData';
-import { getCountryById } from '../utils/findCountryById';
+import GlobeStyles from './Globe.module.css';
+
+import { useGeoJsonData } from '../../utils/useGeoData';
+import { getCountryById } from '../../utils/findCountryById';
+import { rotateProjectionTo } from '../../utils/rotateProjection';
 
 import { motion } from 'framer-motion';
 import { geoPath, geoOrthographic, select, drag, zoom, geoContains } from 'd3';
 import React, { useEffect, useRef, useMemo, useState } from 'react';
-import { rotateProjectionTo } from '../utils/rotateProjection';
 
 // * Animations for the Globe when is a country or not
 
@@ -16,11 +17,11 @@ const globeVariants = {
   empty: {
     scale: 1,
     x: 0,
-    y: 100,
+    y: 80,
   },
   selected: {
     scale: 1,
-    x: -500,
+    x: -400,
   },
 };
 
@@ -153,35 +154,80 @@ function Globe({ currentCountry, setCurrentCountry }) {
 
   if (isLoading) return <p>Is loading</p>;
   return (
-    <motion.svg
-      variants={globeVariants}
-      animate={currentCountry ? 'selected' : 'empty'}
-      initial="initial"
-      transition={{
-        duration: 0.8,
-      }}
-      ref={svgRef}
-      className={styles.svg}
-    >
-      <circle
-        className={styles.circle}
-        cx={'50%'}
-        cy={'41.5%'}
-        r={initialScale}
-      />
-      <g>
-        {data.features.map(({ id }) => (
-          <path
-            key={id}
-            id={id}
-            onClick={onCountryClick}
-            className={`${styles.country} ${
-              currentCountry?.id == id ? styles.selected : ''
-            }`}
-          />
-        ))}
-      </g>
-    </motion.svg>
+    <div className={GlobeStyles.container}>
+      {currentCountry && (
+        <motion.h2
+          initial={{ opacity: 0, x: -400 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.4 }}
+          className={GlobeStyles.text}
+        >
+          {currentCountry.name}
+        </motion.h2>
+      )}
+      {!currentCountry && (
+        <>
+          <motion.b
+            initial={{ opacity: 0, x: 400 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 2.4 }}
+            className={GlobeStyles.worldTextLeft}
+          >
+            W
+            <motion.i
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2, duration: 0.8 }}
+              style={{
+                fontSize: '3rem',
+                position: 'absolute',
+                top: '-2rem',
+                left: 0,
+              }}
+            >
+              Know Your
+            </motion.i>
+          </motion.b>
+          <motion.span
+            initial={{ opacity: 0, x: -400 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 2.5 }}
+            className={GlobeStyles.worldTextRight}
+          >
+            RLD
+          </motion.span>
+        </>
+      )}
+      <motion.svg
+        variants={globeVariants}
+        animate={currentCountry ? 'selected' : 'empty'}
+        initial="initial"
+        transition={{
+          duration: 0.8,
+        }}
+        ref={svgRef}
+        className={GlobeStyles.svg}
+      >
+        <circle
+          className={GlobeStyles.circle}
+          cx={'50%'}
+          cy={'41.5%'}
+          r={initialScale}
+        />
+        <g>
+          {data.features.map(({ id }) => (
+            <path
+              key={id}
+              id={id}
+              onClick={onCountryClick}
+              className={`${GlobeStyles.country} ${
+                currentCountry?.id == id ? GlobeStyles.selected : ''
+              }`}
+            />
+          ))}
+        </g>
+      </motion.svg>
+    </div>
   );
 }
 

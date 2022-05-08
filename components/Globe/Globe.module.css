@@ -1,0 +1,60 @@
+.svg {
+  height: min(90vh, 800px);
+  /* width: min(); */
+  /* width: 1000px; */
+  width: min(90vw, 1000px);
+
+  margin: 0 auto;
+  display: block;
+}
+
+.container {
+  position: relative;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.text {
+  font-size: 80px;
+  font-weight: 800;
+  text-transform: uppercase;
+  pointer-events: none;
+  max-width: 300px;
+
+  color: #ffffff80;
+
+  z-index: 5;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+}
+
+.worldTextLeft {
+  left: 10rem;
+}
+.worldTextRight {
+  right: -2rem;
+}
+.worldTextRight,
+.worldTextLeft {
+  font-size: 17rem;
+  font-weight: 800;
+  /* z-index: 10; */
+  position: absolute;
+  top: 40%;
+  color: #ffffff80;
+}
+.circle {
+  fill: rgb(57, 120, 171);
+}
+
+.country {
+  fill: rgb(107, 65, 23);
+  stroke: rgb(47, 46, 46);
+}
+.country:hover {
+  fill: rgb(203, 60, 60);
+}
+.selected {
+  fill: rgb(203, 60, 60);
+}

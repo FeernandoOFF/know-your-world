@@ -1,0 +1,18 @@
+.container {
+  width: 30%;
+  position: absolute;
+  top: 25%;
+  right: 10%;
+}
+
+.title {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+.description {
+  width: 90%;
+  margin: 0 auto;
+}

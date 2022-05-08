@@ -1,7 +1,8 @@
 import styles from '../styles/Home.module.css';
 
 import { useState } from 'react';
-import Globe from '../components/Globe';
+import Globe from '../components/Globe/index';
+import CountryDetails from '../components/CountryDetails';
 
 function Home() {
   const [currentCountry, setCurrentCountry] = useState(null);
@@ -13,10 +14,10 @@ function Home() {
         setCurrentCountry={setCurrentCountry}
       />
       {currentCountry && (
-        <div>
-          <p>{JSON.stringify(currentCountry)}</p>
-          <button onClick={() => setCurrentCountry(null)}>Close</button>
-        </div>
+        <CountryDetails
+          country={currentCountry}
+          setCurrentCountry={setCurrentCountry}
+        />
       )}
     </div>
   );
