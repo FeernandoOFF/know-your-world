@@ -22,23 +22,17 @@ const dataLineVariants = {
   show: {
     height: '500px',
     transition: {
-      duration: 1,
+      duration: 0.8,
       staggerChildren: 0.3,
-      delay: 2,
+      delay: 0.5,
       when: 'beforeChildren',
     },
   },
 };
 
-const dataItemVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-  },
-};
-
 function CountryDetails({ country, setCurrentCountry }) {
   const [data, setData] = useState(null);
+  const [dataActive, setDataActive] = useState(null);
   const [countryData, setCountryData] = useState(null);
 
   useEffect(() => {
@@ -52,14 +46,13 @@ function CountryDetails({ country, setCurrentCountry }) {
     axios('https://restcountries.com/v2/alpha/' + country.alpha).then(
       ({ data: d }) => {
         setCountryData(d);
-        console.log('EXTRA DATA', d);
       }
     );
   }, [country]);
   return (
     <motion.div
       variants={descriptionVariants}
-      transition={{ duration: 1, delay: 1 }}
+      transition={{ duration: 1, delay: 0.2 }}
       initial="hidden"
       animate="show"
       className={styles.container}
@@ -76,25 +69,45 @@ function CountryDetails({ country, setCurrentCountry }) {
               />
               <h3> {country.name} </h3>
             </div>
-            <button onClick={() => setCurrentCountry(null)}>X</button>
+            <button
+              style={{
+                background: 'transparent',
+                color: 'white',
+                fontSize: '2rem',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+              onClick={() => setCurrentCountry(null)}
+            >
+              X
+            </button>
           </div>
           <motion.div variants={dataLineVariants} className={styles.dataLine}>
-            <motion.div
-              variants={dataItemVariants}
-              className={styles.dataItem}
-            ></motion.div>
-            <motion.div
-              variants={dataItemVariants}
-              className={styles.dataItem}
-            ></motion.div>
-            <motion.div
-              variants={dataItemVariants}
-              className={styles.dataItem}
-            ></motion.div>
-            <motion.div
-              variants={dataItemVariants}
-              className={styles.dataItem}
-            ></motion.div>
+            <DataItem
+              onClick={() => setDataActive(1)}
+              selected={1 == dataActive}
+              clear={() => {
+                setDataActive(null);
+              }}
+              data={<p> {data.extract} </p>}
+              title={'Resume'}
+            />
+            <DataItem
+              onClick={() => setDataActive(2)}
+              selected={2 == dataActive}
+              clear={() => {
+                setDataActive(null);
+              }}
+              data={
+                <div>
+                  {/* <p>{JSON.stringify(countryData)} </p> */}
+                  <p>Capital: {countryData?.capital} </p>
+                  <p>Population: {countryData?.population} </p>
+                  <p>Area: {countryData?.area} </p>
+                </div>
+              }
+              title={'General Data'}
+            />
           </motion.div>
 
           {/* <div className={styles.description}>
@@ -108,3 +121,51 @@ function CountryDetails({ country, setCurrentCountry }) {
 }
 
 export default CountryDetails;
+
+const DataItem = ({ selected, data, onClick, title, clear }) => {
+  const dataItemVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    },
+  };
+  return (
+    <motion.div
+      variants={dataItemVariants}
+      className={styles.dataItem}
+      onClick={onClick}
+    >
+      {!selected && (
+        <p
+          style={{
+            position: 'absolute',
+            right: '3rem',
+            top: '-80%',
+            fontSize: '1.2rem',
+            color: 'white',
+            fontWeight: 600,
+          }}
+        >
+          {title}
+        </p>
+      )}
+      {selected && (
+        <div className={styles.itemContent}>
+          <button
+            onClick={clear}
+            style={{
+              background: 'transparent',
+              float: 'right',
+              border: 'none',
+              fontSize: '1.2rem',
+              cursor: 'pointer',
+            }}
+          >
+            x
+          </button>
+          {data}
+        </div>
+      )}
+    </motion.div>
+  );
+};

@@ -29,6 +29,7 @@ function Globe({ currentCountry, setCurrentCountry }) {
   // ------------
   let width = 600;
   let height = 600;
+  // let initialScale = 150;
   let initialScale = 250;
   let maxScale = 4594.79;
   let minScale = 94.73;
@@ -60,6 +61,7 @@ function Globe({ currentCountry, setCurrentCountry }) {
         .center([0, 0])
         .rotate([0, -30])
         .translate([width / 1.2, height / 1.8]),
+    // .translate([width / 3, height / 1.9]),
     [width, height, initialScale]
   );
   const path = geoPath().projection(projection);

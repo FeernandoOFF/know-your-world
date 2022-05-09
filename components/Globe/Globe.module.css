@@ -10,7 +10,8 @@
 
 .container {
   position: relative;
-  width: 70%;
+  /* width: 70%; */
+  width: min(95%, 1300px);
   margin: 0 auto;
 }
 

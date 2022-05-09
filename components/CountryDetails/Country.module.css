@@ -10,13 +10,18 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
-  width: min(30%, 200px);
+  width: min(50%, 400px);
+  right: 3rem;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 600;
 }
 .top {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 4rem;
 }
 .description {
   width: 90%;
@@ -36,16 +41,28 @@
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
-/* .dataItem:hover {
-  transform: scale(1.25);
-  transition: all 0.2s;
-} */
 .dataItem {
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
   border-radius: 100%;
-  background-color: #d8d8d8;
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+}
+
+.itemContent {
+  width: 500px;
+  /* max-height: 200px; */
+  cursor: default;
+  position: absolute;
+  right: 3rem;
+  top: -50%;
+  background: #d8d8d8;
+  border-radius: 20px;
+  padding: 1rem 2rem;
+  font-size: 0.8rem;
 }
