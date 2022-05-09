@@ -15,15 +15,46 @@ const descriptionVariants = {
   },
 };
 
+const dataLineVariants = {
+  hidden: {
+    height: '0%',
+  },
+  show: {
+    height: '500px',
+    transition: {
+      duration: 1,
+      staggerChildren: 0.3,
+      delay: 2,
+      when: 'beforeChildren',
+    },
+  },
+};
+
+const dataItemVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+  },
+};
+
 function CountryDetails({ country, setCurrentCountry }) {
   const [data, setData] = useState(null);
-  // const [data, isLoading] = useGetSingleCountry(country.name);
+  const [countryData, setCountryData] = useState(null);
+
   useEffect(() => {
+    if (!country) return;
     axios(
       'https://en.wikipedia.org/api/rest_v1/page/summary/' + country.name
     ).then(({ data }) => {
       setData(data);
     });
+
+    axios('https://restcountries.com/v2/alpha/' + country.alpha).then(
+      ({ data: d }) => {
+        setCountryData(d);
+        console.log('EXTRA DATA', d);
+      }
+    );
   }, [country]);
   return (
     <motion.div
@@ -34,23 +65,44 @@ function CountryDetails({ country, setCurrentCountry }) {
       className={styles.container}
     >
       {data && (
-        <>
-          <div className={styles.title}>
-            <img
-              src={data.thumbnail.source}
-              alt={data.name}
-              width={80}
-              height={40}
-            />
-            <h3> {country.name} </h3>
+        <div className={styles.dataContainer}>
+          <div className={styles.top}>
+            <div className={styles.title}>
+              <img
+                src={data.thumbnail.source}
+                alt={data.name}
+                width={80}
+                height={40}
+              />
+              <h3> {country.name} </h3>
+            </div>
+            <button onClick={() => setCurrentCountry(null)}>X</button>
           </div>
-          <div className={styles.description}>
+          <motion.div variants={dataLineVariants} className={styles.dataLine}>
+            <motion.div
+              variants={dataItemVariants}
+              className={styles.dataItem}
+            ></motion.div>
+            <motion.div
+              variants={dataItemVariants}
+              className={styles.dataItem}
+            ></motion.div>
+            <motion.div
+              variants={dataItemVariants}
+              className={styles.dataItem}
+            ></motion.div>
+            <motion.div
+              variants={dataItemVariants}
+              className={styles.dataItem}
+            ></motion.div>
+          </motion.div>
+
+          {/* <div className={styles.description}>
             <p>{data.extract} </p>
-          </div>
+          </div> */}
           {/* <img src={data.originalimage.source} alt="" /> */}
-        </>
+        </div>
       )}
-      <button onClick={() => setCurrentCountry(null)}>Clear</button>
     </motion.div>
   );
 }

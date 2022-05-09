@@ -148,6 +148,7 @@ function Globe({ currentCountry, setCurrentCountry }) {
 
   function onCountryClick({ target: { id } }) {
     const selectedC = getCountryById(id);
+    console.log('Selected C', selectedC);
     setCurrentCountry(selectedC);
     setRotation(selectedC.rotation);
   }
