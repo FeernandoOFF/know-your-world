@@ -37,7 +37,7 @@ function Globe({ currentCountry, setCurrentCountry }) {
   let minScroll = 1;
   let zoomInValue = 1.1487;
   let zoomOutValue = 0.87055;
-  let sensitivity = 75;
+  let sensitivity = 90;
   let rotationValue = 5;
   // rotation,
   // selectedCountry,
